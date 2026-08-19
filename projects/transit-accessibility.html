@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Transport Accessibility — Maxim Lavelin</title>
+<meta name="description" content="Combined census and transit-schedule data into an accessibility index, using Getis-Ord Gi* to flag statistically significant transit deserts — exported ready for ArcGIS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<em>.</em></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#methods" class="hide-sm">Methods</a>
+      <a href="../index.html#about" class="hide-sm">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">CV</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← All projects</a> &nbsp;/&nbsp; <span class="mono">Fig. 04</span></div>
+
+  <header class="p-hero">
+    <div class="r-domain">GIS · Spatial data science</div>
+    <h1>Transit Gap: A Spatial Accessibility Index for Public Transport</h1>
+    <div class="p-meta"><span>GIS & AI</span><span>Python (Colab)</span><span>CBS Census 2022 + GTFS</span></div>
+    <div class="callout">Built a 400-metre accessibility and need index combining CBS Census 2022 with GTFS transit data, using Getis-Ord Gi* to identify statistically significant transit deserts — exported as GeoJSON and CSV ready for direct use in ArcGIS.</div>
+    <div class="tags"><span class="tag">Python</span><span class="tag">GeoPandas</span><span class="tag">Shapely</span><span class="tag">GTFS</span><span class="tag">Spatial joins</span><span class="tag">Getis-Ord Gi*</span><span class="tag">GeoJSON</span></div>
+    <div class="dl"><a href="#">Full report (PDF)</a><a href="#">Notebook (.ipynb)</a></div>
+  </header>
+
+  <div class="doc"><h2>Problem</h2><div class="doc-body"><p>Transit planning needs a precise, defensible definition of &ldquo;underserved&rdquo; rather than a visual impression of a sparse map. This project builds a quantitative accessibility index from population data and real transit stop locations, then tests which gaps are statistically significant rather than incidental.</p></div></div><div class="doc"><h2>Data</h2><div class="doc-body"><ul><li><b>CBS Census 2022</b> — population and demographic data at statistical-area level.</li><li><b>GTFS</b> feeds — actual transit stop locations and service schedules.</li></ul></div></div><div class="doc"><h2>Approach</h2><div class="doc-body"><ul><li>Built <b>400-metre walking buffers</b> around every transit stop using GeoPandas geometry operations.</li><li><b>Spatial joins</b> between population polygons and buffer coverage, to compute what share of each area's population has walkable access.</li><li>Constructed an <b>accessibility and need index</b> combining coverage with population density and [demographic factors, e.g. age or car-ownership].</li><li>Applied <b>Getis-Ord Gi*</b> hot-spot analysis, which identifies clusters of high or low accessibility unlikely to arise by chance — the step that turns a map into a finding.</li><li>Exported <b>GeoJSON and CSV</b> structured for direct import into ArcGIS, so a planner can use the output without touching the code.</li></ul></div></div><div class="doc"><h2>Results</h2><div class="doc-body"><p>[Summarise: identified [N] statistically significant transit-desert clusters, concentrated in [region type], covering roughly [X]% of the study area's population.]</p><!-- FIGURE SLOT: export your Gi* map and uncomment
+<figure class="fig"><img src="../assets/transit-hotspots.png" alt="Getis-Ord Gi* hot spot map"><figcaption>Gi* hot-spot analysis of transit accessibility.</figcaption></figure>
+--></div></div><div class="doc"><h2>Limitations</h2><div class="doc-body"><p>[For example: the index treats stop presence as binary, but a stop served once an hour is not meaningfully accessible — incorporating service frequency and wait time would sharpen it, as would validating against reported commute times.]</p></div></div>
+
+  <div class="pager"><a href="retail-consultant.html">← Retail Consultant</a><a href="web-tracking.html">Web Tracking & AI Profiling →</a></div>
+<footer>
+    <span>Maxim Lavelin · Bar-Ilan University · 2026</span>
+    <span><a href="https://github.com/maxim-lavelin">GitHub</a> &nbsp;·&nbsp; <a href="#">LinkedIn</a> &nbsp;·&nbsp; <a href="mailto:maxim.lavelin@live.biu.ac.il">maxim.lavelin@live.biu.ac.il</a></span>
+  </footer>
+</div>
+</body>
+</html>

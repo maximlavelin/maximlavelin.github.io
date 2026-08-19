@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Safety Intelligence — Maxim Lavelin</title>
+<meta name="description" content="Classified ~300,000 NHTSA complaints, comparing MLP, CNN and BiLSTM with calibration and bootstrap confidence intervals rather than a single accuracy number.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<em>.</em></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#methods" class="hide-sm">Methods</a>
+      <a href="../index.html#about" class="hide-sm">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">CV</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← All projects</a> &nbsp;/&nbsp; <span class="mono">Fig. 02</span></div>
+
+  <header class="p-hero">
+    <div class="r-domain">Deep learning · NLP</div>
+    <h1>Vehicle Safety Intelligence: Classifying NHTSA Complaints at Scale</h1>
+    <div class="p-meta"><span>Deep Learning (35374)</span><span>May 2026</span><span>Final project</span></div>
+    <div class="callout">Trained and compared MLP, CNN and BiLSTM architectures on <b>~300,000</b> NHTSA vehicle safety complaints, reporting ROC and precision-recall curves, calibration, and bootstrap confidence intervals for every metric — not a single point estimate.</div>
+    <div class="tags"><span class="tag">Python</span><span class="tag">TF-IDF</span><span class="tag">PyTorch / TensorFlow</span><span class="tag">MLP</span><span class="tag">CNN</span><span class="tag">BiLSTM</span><span class="tag">Calibration</span><span class="tag">Bootstrap CIs</span></div>
+    <div class="dl"><a href="#">Full report (PDF)</a><a href="#">Notebook (.ipynb)</a></div>
+  </header>
+
+  <div class="doc"><h2>Problem</h2><div class="doc-body"><p>NHTSA receives hundreds of thousands of free-text vehicle safety complaints. Triaging them by hand does not scale. This project builds a text classification pipeline to categorise complaints automatically, comparing progressively more expressive architectures under an evaluation protocol designed to be statistically honest rather than flattering.</p></div></div><div class="doc"><h2>Data</h2><div class="doc-body"><ul><li><b>~300,000</b> free-text NHTSA complaint records.</li><li>Text cleaning, tokenisation, and <b>TF-IDF</b> vectorisation as the classical baseline representation.</li><li>[Add: target variable definition — severity class, defect category, or injury flag.]</li></ul></div></div><div class="doc"><h2>Approach</h2><div class="doc-body"><p>Three architectures of increasing capacity, to test whether deep sequence models actually earn their cost over a simpler baseline on this task:</p><ul><li><b>MLP</b> on TF-IDF features — fast and interpretable, the bar the others have to clear.</li><li><b>CNN</b> — captures local n-gram-like patterns in complaint text.</li><li><b>BiLSTM</b> — models sequential context across the full complaint narrative.</li></ul></div></div><div class="doc"><h2>Evaluation</h2><div class="doc-body"><p>Evaluation deliberately went beyond headline accuracy:</p><ul><li><b>ROC and precision-recall curves</b> — PR matters here because complaint classes are imbalanced, and ROC-AUC alone can look strong on an imbalanced problem.</li><li><b>Calibration analysis</b> — checking whether predicted probabilities are trustworthy, not merely whether the top class is right. A model used for triage needs to be believable when it says 90%.</li><li><b>Bootstrap confidence intervals</b> — quantifying how much each metric would move on a different sample, rather than trusting one split.</li></ul></div></div><div class="doc"><h2>Results</h2><div class="doc-body"><table class="metrics"><tr><th>Model</th><th>ROC-AUC</th><th>PR-AUC / F1</th><th>95% CI</th></tr><tr><td>MLP (TF-IDF)</td><td class="num">[value]</td><td class="num">[value]</td><td class="num">[value]</td></tr><tr><td>CNN</td><td class="num">[value]</td><td class="num">[value]</td><td class="num">[value]</td></tr><tr class="best"><td>BiLSTM</td><td class="num">[value]</td><td class="num">[value]</td><td class="num">[value]</td></tr></table><p>[Summarise which model won and why — for example, whether the BiLSTM's gain over the CNN was larger than the bootstrap interval, which is the question that actually decides if the extra complexity is justified.]</p></div></div><div class="doc"><h2>Limitations</h2><div class="doc-body"><p>[For example: with more compute I would fine-tune a pretrained transformer as a stronger baseline than TF-IDF + MLP, and test whether it meaningfully beats the BiLSTM given the added inference cost.]</p></div></div>
+
+  <div class="pager"><a href="nyc-taxi.html">← NYC Taxi Fleet Optimizer</a><a href="retail-consultant.html">Retail Consultant →</a></div>
+<footer>
+    <span>Maxim Lavelin · Bar-Ilan University · 2026</span>
+    <span><a href="https://github.com/maxim-lavelin">GitHub</a> &nbsp;·&nbsp; <a href="#">LinkedIn</a> &nbsp;·&nbsp; <a href="mailto:maxim.lavelin@live.biu.ac.il">maxim.lavelin@live.biu.ac.il</a></span>
+  </footer>
+</div>
+</body>
+</html>

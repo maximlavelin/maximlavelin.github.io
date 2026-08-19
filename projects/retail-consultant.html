@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Consultant — Maxim Lavelin</title>
+<meta name="description" content="One pipeline covering segmentation, cross-sell rules, anomaly detection and recommendations on ~1M Online Retail II transactions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<em>.</em></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#methods" class="hide-sm">Methods</a>
+      <a href="../index.html#about" class="hide-sm">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">CV</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← All projects</a> &nbsp;/&nbsp; <span class="mono">Fig. 03</span></div>
+
+  <header class="p-hero">
+    <div class="r-domain">Unsupervised learning · Customer analytics</div>
+    <h1>Retail Consultant: An End-to-End Customer Analytics Pipeline</h1>
+    <div class="p-meta"><span>Unsupervised Learning</span><span>March 2026</span><span>Online Retail II</span></div>
+    <div class="callout">Segmented customers into [N] actionable groups using RFM features and clustering, mined association rules for cross-sell, flagged anomalous accounts, and built an SVD recommender — a single pipeline covering segmentation, merchandising and retention.</div>
+    <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">mlxtend</span><span class="tag">RFM</span><span class="tag">K-Means</span><span class="tag">HAC</span><span class="tag">Apriori</span><span class="tag">LOF</span><span class="tag">SVD</span></div>
+    <div class="dl"><a href="#">Full report (PDF)</a><a href="#">Notebook (.ipynb)</a></div>
+  </header>
+
+  <div class="doc"><h2>Problem</h2><div class="doc-body"><p>Retailers sitting on raw transaction logs often cannot answer four basic questions: who are our best customers, what should we cross-sell, which accounts look anomalous, and what should we recommend next. This project builds one pipeline that answers all four, on the Online Retail II dataset from a UK online retailer.</p></div></div><div class="doc"><h2>Approach</h2><div class="doc-body"><ul><li><b>RFM feature engineering</b> — recency, frequency and monetary value per customer, the standard basis for customer value segmentation.</li><li><b>Clustering</b> — K-Means compared against hierarchical agglomerative clustering, selecting on both silhouette score and whether the resulting groups were actually interpretable as customer types.</li><li><b>Apriori association rules</b> — surfaced product bundles frequently bought together, directly usable for merchandising decisions.</li><li><b>Time-series decomposition</b> — separated sales into trend, seasonality and residual to distinguish real demand shifts from noise.</li><li><b>Local Outlier Factor</b> — flagged customers and transactions with unusual behaviour, relevant as fraud or churn-risk signals.</li><li><b>SVD recommender</b> — matrix factorisation over the customer-product interaction matrix for personalised recommendations.</li></ul></div></div><div class="doc"><h2>Results</h2><div class="doc-body"><table class="metrics"><tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr><tr><td>Silhouette score</td><td class="num">[X.XX]</td><td>Cluster separation quality</td></tr><tr class="best"><td>Top segment revenue share</td><td class="num">[XX%]</td><td>Where retention spend should go</td></tr><tr><td>Recommender RMSE</td><td class="num">[X.XX]</td><td>Accuracy on held-out interactions</td></tr></table><p>[Describe the segments in business language — for example: high-value loyalists, at-risk high spenders, one-time bargain buyers — since the segment names are what a stakeholder would actually act on.]</p></div></div><div class="doc"><h2>Limitations</h2><div class="doc-body"><p>With more time I would validate the segments against downstream outcomes such as repeat purchase rate and churn, rather than clustering metrics alone, and test DBSCAN as a density-based alternative for customer groups that are not cleanly spherical.</p></div></div>
+
+  <div class="pager"><a href="vehicle-safety.html">← Vehicle Safety Intelligence</a><a href="transit-accessibility.html">Public Transport Accessibility →</a></div>
+<footer>
+    <span>Maxim Lavelin · Bar-Ilan University · 2026</span>
+    <span><a href="https://github.com/maxim-lavelin">GitHub</a> &nbsp;·&nbsp; <a href="#">LinkedIn</a> &nbsp;·&nbsp; <a href="mailto:maxim.lavelin@live.biu.ac.il">maxim.lavelin@live.biu.ac.il</a></span>
+  </footer>
+</div>
+</body>
+</html>
