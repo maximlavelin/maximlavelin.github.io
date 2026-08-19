@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>Web Tracking & AI Profiling — Maxim Lavelin</title>
+<meta name="description" content="Google trackers on 99.2% of 10,000 sites; news sites carry 10.85 trackers against a 6.25 mean. The ethical point: the two &ldquo;tracking regimes&rdquo; did not exist in the data — the algorithm created them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>/* ============================================================
+   Maxim Lavelin — portfolio
+   Direction: the portfolio as a research paper.
+   Palette derived from the matplotlib default color cycle.
+   ============================================================ */
+
+:root{
+  color-scheme: light only;
+  --paper:      #F7F8FA;
+  --paper-2:    #FFFFFF;
+  --ink:        #12161C;
+  --ink-soft:   #4A5563;
+  --ink-faint:  #7C8899;
+  --rule:       #DCE1E8;
+  --rule-soft:  #E9EDF2;
+  --plot-blue:  #1F77B4;
+  --plot-orange:#FF7F0E;
+  --blue-wash:  #EAF2F8;
+
+  --max: 1160px;
+  --gut: 32px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+html{ background: var(--paper); }
+body{
+  background: var(--paper);
+  color: var(--ink);
+  font-family:'IBM Plex Sans', system-ui, sans-serif;
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{
+  font-family:'IBM Plex Serif', Georgia, serif;
+  font-weight:600;
+  letter-spacing:-0.015em;
+  line-height:1.15;
+}
+a{ color:inherit; }
+img{ max-width:100%; display:block; }
+
+.mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+.wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--gut); }
+
+/* ---------- label / eyebrow ---------- */
+.label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:60;
+  background:rgba(247,248,250,.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.nav .wrap{
+  display:flex; align-items:center; justify-content:space-between;
+  height:60px;
+}
+.brand{
+  font-family:'IBM Plex Serif', serif; font-weight:600;
+  font-size:16px; text-decoration:none; letter-spacing:-.01em;
+}
+.brand em{ font-style:normal; color:var(--plot-blue); }
+.nav-links{ display:flex; align-items:center; gap:26px; font-size:14px; }
+.nav-links a{ color:var(--ink-soft); text-decoration:none; transition:color .15s; }
+.nav-links a:hover{ color:var(--ink); }
+.nav-cta{
+  border:1px solid var(--plot-blue); color:var(--plot-blue)!important;
+  padding:6px 15px; border-radius:2px; font-size:13.5px;
+}
+.nav-cta:hover{ background:var(--plot-blue); color:#fff!important; }
+
+/* ---------- hero: title block + abstract ---------- */
+.hero{ padding:60px 0 52px; border-bottom:1px solid var(--rule); }
+.hero .status{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'IBM Plex Mono', monospace; font-size:12px;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--plot-blue); margin-bottom:26px;
+}
+.hero .status::before{
+  content:''; width:7px; height:7px; border-radius:50%;
+  background:var(--plot-blue);
+}
+.hero h1{
+  font-size:clamp(36px, 4.9vw, 58px);
+  max-width:24ch;
+  letter-spacing:-.028em;
+}
+.hero h1 .thin{ font-style:italic; font-weight:400; color:var(--plot-blue); }
+
+.byline{
+  margin-top:26px; padding-top:20px; border-top:1px solid var(--rule-soft);
+  display:flex; flex-wrap:wrap; gap:8px 28px;
+  font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink-faint);
+}
+.byline b{ color:var(--ink-soft); font-weight:500; }
+
+.abstract{
+  margin-top:32px;
+  display:grid; grid-template-columns:150px 1fr; gap:28px;
+  align-items:start;
+}
+.abstract p{ color:var(--ink-soft); max-width:64ch; font-size:17px; }
+.abstract p + p{ margin-top:14px; }
+
+/* ---------- section heads ---------- */
+.section{ padding:60px 0 0; }
+.section-head{
+  display:flex; align-items:baseline; gap:16px;
+  padding-bottom:18px; margin-bottom:8px;
+  border-bottom:2px solid var(--ink);
+}
+.section-head h2{ font-size:24px; }
+.section-head .count{
+  margin-left:auto; font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px; color:var(--ink-faint);
+}
+
+/* ---------- project rows (the core list) ---------- */
+.rows{ border-top:0; }
+.row{
+  display:grid;
+  grid-template-columns:64px 232px 1fr;
+  gap:28px;
+  align-items:start;
+  padding:26px 0 26px;
+  border-bottom:1px solid var(--rule);
+  text-decoration:none;
+  transition:background .18s ease;
+  position:relative;
+}
+.row::after{
+  content:''; position:absolute; left:-16px; right:-16px; top:0; bottom:0;
+  background:transparent; border-radius:3px; z-index:-1;
+  transition:background .18s ease;
+}
+.row:hover::after{ background:var(--paper-2); box-shadow:0 1px 14px rgba(18,22,28,.06); }
+.row:hover .r-title{ color:var(--plot-blue); }
+.row:hover .r-go{ opacity:1; transform:translateX(0); }
+
+.r-fig{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px; letter-spacing:.1em; color:var(--ink-faint);
+  padding-top:4px;
+}
+.r-chart{
+  border:1px solid var(--rule);
+  background:var(--paper-2);
+  padding:8px 10px 6px;
+  border-radius:2px;
+}
+.r-chart svg{ display:block; width:100%; height:auto; }
+.r-chart .cap{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px; color:var(--ink-faint);
+  margin-top:5px; letter-spacing:.03em;
+}
+
+.r-body{ padding-top:2px; }
+.r-domain{
+  font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--plot-orange);
+}
+.r-title{
+  font-family:'IBM Plex Serif', serif; font-weight:600;
+  font-size:25px; margin:7px 0 9px; letter-spacing:-.018em;
+  transition:color .18s;
+}
+.r-stack{
+  font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+  color:var(--ink-faint); margin-bottom:13px;
+}
+.r-result{
+  font-size:15.5px; color:var(--ink-soft); max-width:62ch;
+  padding-left:14px; border-left:2px solid var(--plot-blue);
+}
+.r-result b{ color:var(--ink); font-weight:600; }
+.r-go{
+  margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+  color:var(--plot-blue); opacity:0; transform:translateX(-4px);
+  transition:opacity .18s, transform .18s;
+}
+
+/* ---------- methods / skills strip ---------- */
+.methods{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  border:1px solid var(--rule); background:var(--paper-2);
+  margin-top:26px;
+}
+.method{ padding:20px 22px; border-right:1px solid var(--rule); }
+.method:last-child{ border-right:0; }
+.method h4{ font-size:14px; margin-bottom:9px; }
+.method ul{ list-style:none; }
+.method li{
+  font-family:'IBM Plex Mono', monospace; font-size:12px;
+  color:var(--ink-faint); line-height:1.9;
+}
+
+/* ---------- about ---------- */
+.about{ display:grid; grid-template-columns:150px 1fr; gap:28px; margin-top:26px; }
+.about p{ color:var(--ink-soft); max-width:66ch; }
+.about p + p{ margin-top:15px; }
+.about strong{ color:var(--ink); font-weight:600; }
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:80px; border-top:2px solid var(--ink);
+  padding:26px 0 70px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-faint);
+}
+footer a{ color:var(--ink-soft); text-decoration:none; border-bottom:1px solid var(--rule); }
+footer a:hover{ color:var(--plot-blue); border-bottom-color:var(--plot-blue); }
+
+/* ============================================================
+   PROJECT PAGE
+   ============================================================ */
+.crumb{ padding:26px 0 0; font-family:'IBM Plex Mono', monospace; font-size:12.5px; }
+.crumb a{ color:var(--plot-blue); text-decoration:none; }
+.crumb a:hover{ text-decoration:underline; }
+
+.p-hero{ padding:22px 0 40px; border-bottom:2px solid var(--ink); }
+.p-hero .r-domain{ font-size:12px; }
+.p-hero h1{ font-size:clamp(29px,3.7vw,42px); max-width:27ch; margin:12px 0 0; }
+.p-meta{
+  margin-top:18px; display:flex; flex-wrap:wrap; gap:6px 26px;
+  font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-faint);
+}
+.callout{
+  margin-top:26px; background:var(--blue-wash);
+  border-left:3px solid var(--plot-blue);
+  padding:18px 22px; font-size:16px; color:var(--ink-soft);
+  max-width:74ch;
+}
+.callout b{ color:var(--ink); font-weight:600; }
+.tags{ margin-top:20px; display:flex; flex-wrap:wrap; gap:7px; }
+.tag{
+  font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+  padding:4px 10px; border:1px solid var(--rule);
+  background:var(--paper-2); border-radius:2px; color:var(--ink-soft);
+}
+.dl{ margin-top:22px; display:flex; flex-wrap:wrap; gap:22px; font-size:14px; }
+.dl a{ color:var(--plot-blue); text-decoration:none; border-bottom:1px solid transparent; }
+.dl a:hover{ border-bottom-color:var(--plot-blue); }
+
+.doc{ display:grid; grid-template-columns:150px 1fr; gap:28px; padding:48px 0 20px; }
+.doc + .doc{ padding-top:0; }
+.doc h2{ font-size:20px; padding-top:2px; }
+.doc-body p{ color:var(--ink-soft); max-width:70ch; }
+.doc-body p + p{ margin-top:14px; }
+.doc-body ul{ margin:4px 0 0 18px; color:var(--ink-soft); }
+.doc-body li{ margin-bottom:9px; max-width:68ch; }
+.doc-body b{ color:var(--ink); font-weight:600; }
+
+table.metrics{
+  width:100%; border-collapse:collapse; margin:6px 0 18px;
+  background:var(--paper-2); border:1px solid var(--rule);
+  font-size:14.5px;
+}
+table.metrics th{
+  font-family:'IBM Plex Mono', monospace; font-size:11px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
+  text-align:left; padding:11px 16px; border-bottom:1px solid var(--rule);
+}
+table.metrics td{ padding:11px 16px; border-bottom:1px solid var(--rule-soft); }
+table.metrics tr:last-child td{ border-bottom:0; }
+table.metrics td.num{ font-family:'IBM Plex Mono', monospace; }
+table.metrics tr.best td{ background:var(--blue-wash); }
+table.metrics tr.best td.num{ color:var(--plot-blue); font-weight:600; }
+
+figure.fig{ margin:22px 0 6px; }
+figure.fig img{ border:1px solid var(--rule); background:var(--paper-2); border-radius:2px;
+  max-height:440px; width:auto; max-width:100%; margin:0 auto; }
+figure.fig figcaption{
+  font-family:'IBM Plex Mono', monospace; font-size:12px;
+  color:var(--ink-faint); margin-top:9px;
+}
+
+.pager{
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  border-top:1px solid var(--rule); margin-top:40px; padding:24px 0 0;
+  font-family:'IBM Plex Mono', monospace; font-size:13px;
+}
+.pager a{ color:var(--ink-soft); text-decoration:none; }
+.pager a:hover{ color:var(--plot-blue); }
+
+/* ---------- accessibility + responsive ---------- */
+a:focus-visible, .row:focus-visible{
+  outline:2px solid var(--plot-blue); outline-offset:3px; border-radius:2px;
+}
+@media (prefers-reduced-motion:reduce){
+  *{ transition:none!important; scroll-behavior:auto!important; }
+  .r-go{ opacity:1; transform:none; }
+}
+
+@media (max-width:900px){
+  .methods{ grid-template-columns:1fr 1fr; }
+  .method:nth-child(2){ border-right:0; }
+  .method:nth-child(1), .method:nth-child(2){ border-bottom:1px solid var(--rule); }
+}
+@media (max-width:760px){
+  :root{ --gut:20px; }
+  .hero{ padding:56px 0 44px; }
+  .abstract, .about, .doc{ grid-template-columns:1fr; gap:12px; }
+  .row{ grid-template-columns:1fr; gap:16px; padding:26px 0; }
+  .r-fig{ padding-top:0; }
+  .r-chart{ max-width:280px; }
+  .r-go{ opacity:1; transform:none; }
+  .nav-links{ gap:16px; font-size:13px; }
+  .nav-links a.hide-sm{ display:none; }
+}
+@media (max-width:520px){
+  .methods{ grid-template-columns:1fr; }
+  .method{ border-right:0; border-bottom:1px solid var(--rule); }
+  .method:last-child{ border-bottom:0; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<em>.</em></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#methods" class="hide-sm">Methods</a>
+      <a href="../index.html#about" class="hide-sm">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">CV</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">← All projects</a> &nbsp;/&nbsp; <span class="mono">Fig. 05</span></div>
+
+  <header class="p-hero">
+    <div class="r-domain">Data ethics · Unsupervised learning</div>
+    <h1>From Tracking Infrastructure to AI Profiling</h1>
+    <div class="p-meta"><span>AI Ethics seminar</span><span>WhoTracks.me, March 2025</span><span>10,000 websites</span></div>
+    <div class="callout">Measured tracking across <b>10,000 websites</b> and used K-Means to identify two tracking regimes (silhouette 0.467). The central argument is methodological: those regime labels were <b>absent from the source data</b> and were manufactured by the clustering choices — the same computational move that turns behavioural traces into inferred profiles of people.</div>
+    <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">K-Means</span><span class="tag">DBSCAN</span><span class="tag">Chi-square</span><span class="tag">PCA</span><span class="tag">Data ethics</span></div>
+    <div class="dl"><a href="../assets/Web_Tracking_Final_Report.pdf">Full report (PDF)</a><a href="https://colab.research.google.com/drive/1S5Uoo9C8lWHC3WEYo55xK7jb4rjSKR8F">Open notebook in Colab</a></div>
+  </header>
+
+  <div class="doc"><h2>Question</h2><div class="doc-body"><p>How do online tracking practices enable AI-driven profiling, and what ethical concerns emerge from algorithmic inference? The empirical half measures tracking across 10,000 sites. The conceptual half uses that exercise to demonstrate something about inference itself — that the categories a model outputs are made, not found.</p></div></div><div class="doc"><h2>Data and features</h2><div class="doc-body"><p>Built a site-level dataset of <b>10,000 rows</b> from the WhoTracks.me March 2025 release. Features cover tracker volume, company diversity, cookie activity, query-string tracking, referer leakage, third-party cookies and overall tracking prevalence, plus Facebook presence and one-hot site categories.</p><p>One deliberate exclusion is worth noting: <b>Google presence was dropped from the clustering</b> despite being retained descriptively, because at <b>99.2% prevalence</b> it has almost no discriminative power. A feature that is true of nearly everything cannot separate anything.</p></div></div><div class="doc"><h2>Findings</h2><div class="doc-body"><p>Across the 10,000 sites the mean tracker count was <b>6.25</b> (median 5.2). Google-affiliated trackers appeared on <b>99.2%</b> of sites and Facebook/Meta on <b>48.9%</b> &mdash; concentration consistent with Englehardt and Narayanan (2016).</p><p>Tracking varies sharply by sector: <b>News and Portals average 10.85</b> trackers per site, against <b>3.82 for Banking</b> and <b>3.06 for Government</b>.</p><figure class="fig"><img src="../assets/fig/web-categories.png" alt="Average trackers per site by website category."><figcaption>Average trackers per site by website category.</figcaption></figure><p>K-Means at K=2 (silhouette <b>0.467</b>) split sites into High and Lower Tracking Intensity regimes. The high-intensity group carries more than twice the trackers (12.05 vs. 4.87) and companies (9.14 vs. 3.61), with triple the referer leakage.</p><figure class="fig"><img src="../assets/fig/web-clusters.png" alt="Mean tracking characteristics of the two K-Means regimes."><figcaption>Mean tracking characteristics of the two K-Means regimes.</figcaption></figure><p>The category&ndash;cluster association is significant at <b>p &lt; .001</b>, with News and Portals strongly overrepresented in the high-intensity regime (standardised residual <b>+23.7</b>) while Government, Banking and Adult sites are underrepresented. DBSCAN separately identified <b>634 outliers</b>, the most extreme carrying 26&ndash;35 trackers.</p><figure class="fig"><img src="../assets/fig/web-residuals.png" alt="Standardised residuals for the category&ndash;regime association (red = overrepresented)."><figcaption>Standardised residuals for the category&ndash;regime association (red = overrepresented).</figcaption></figure></div></div><div class="doc"><h2>The actual argument</h2><div class="doc-body"><p>A silhouette of 0.467 indicates meaningful but overlapping structure — a <b>continuum, not two natural kinds</b> of website. The two regimes are an artefact of choosing K=2, of which features were selected, and of how they were scaled. Change those decisions and the categories change.</p><p>That is precisely the ethical problem. The labels did not exist in the source data; the algorithm produced them. Applied to behavioural data about people rather than sites, the identical procedure generates inferred interests, risk scores and predictive profiles — categories that a person never disclosed, could not anticipate at the moment of consent, and cannot easily contest. The privacy harm sits in the <b>inference step</b>, not only in collection.</p><p>Working on this changed how I treat cluster labels in my other projects. Naming a group is an analytical act with consequences, not a neutral description of something that was already there.</p></div></div><div class="doc"><h2>Limitations</h2><div class="doc-body"><p>This is a single monthly snapshot and it classifies websites, not users. WhoTracks.me measurements come from consenting Ghostery and Cliqz users, who likely differ from the general population in privacy awareness, geography and browser choice; the direction of that sampling bias cannot be determined from the data. Several tracking indicators are also strongly correlated, reducing the number of genuinely independent signals driving the clusters.</p></div></div>
+
+  <div class="pager"><a href="transit-accessibility.html">← Public Transport Accessibility</a><a href="../index.html">All projects →</a></div>
+<footer>
+    <span>Maxim Lavelin · Bar-Ilan University · 2026</span>
+    <span><a href="https://github.com/maxim-lavelin">GitHub</a> &nbsp;·&nbsp; <a href="#">LinkedIn</a> &nbsp;·&nbsp; <a href="mailto:maxim.lavelin@live.biu.ac.il">maxim.lavelin@live.biu.ac.il</a></span>
+  </footer>
+</div>
+</body>
+</html>
