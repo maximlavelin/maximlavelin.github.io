@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Consultant — Maxim Lavelin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<span>.</span></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#about">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">Resume</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">← All projects</a></div>
+
+  <header class="project-hero">
+    <span class="pc-tag mono">Unsupervised Learning · Customer Analytics · March 2026</span>
+    <h1>Retail Consultant: A Full Customer Analytics Pipeline</h1>
+    <div class="result-line">
+      <b>Result:</b> Segmented customers into [N] actionable groups via RFM + clustering, mined
+      association rules for cross-sell opportunities, flagged anomalous accounts, and built an
+      SVD-based recommender — a single pipeline covering segmentation, merchandising, and
+      retention on the Online Retail II dataset.
+    </div>
+    <div class="tags">
+      <span class="tag">Python</span><span class="tag">RFM feature engineering</span>
+      <span class="tag">K-Means / HAC</span><span class="tag">Apriori</span>
+      <span class="tag">Time-series decomposition</span><span class="tag">LOF anomaly detection</span>
+      <span class="tag">SVD recommender</span>
+    </div>
+    <div class="links-row">
+      <a href="#">📄 Full report (PDF)</a>
+      <a href="#">📓 Notebook</a>
+    </div>
+  </header>
+
+  <article class="body-content">
+
+    <h2>The problem</h2>
+    <p>Retailers sitting on raw transaction logs often can't answer basic questions: who are our
+    best customers, what should we cross-sell, which accounts look anomalous, and what should we
+    recommend next? This project builds one pipeline that answers all four, using the Online
+    Retail II dataset (UK-based online retailer, ~1M transactions).</p>
+
+    <h2>Approach</h2>
+    <ul>
+      <li><b>RFM feature engineering</b> — Recency, Frequency, Monetary value per customer, the
+      standard basis for customer value segmentation</li>
+      <li><b>Clustering</b> — compared K-Means against Hierarchical Agglomerative Clustering (HAC)
+      to segment customers, selecting the approach that gave more interpretable, well-separated
+      groups (silhouette score [X.XX])</li>
+      <li><b>Apriori association rule mining</b> — surfaced product bundles frequently bought
+      together, directly usable for cross-sell/merchandising decisions</li>
+      <li><b>Time-series decomposition</b> — separated overall sales into trend, seasonality, and
+      residual to distinguish real demand shifts from noise</li>
+      <li><b>LOF (Local Outlier Factor) anomaly detection</b> — flagged customers/transactions with
+      unusual behavior, relevant for fraud or churn-risk signals</li>
+      <li><b>SVD-based recommender system</b> — matrix factorization over the customer-product
+      interaction matrix to generate personalized recommendations</li>
+    </ul>
+
+    <h2>Results</h2>
+    <table class="metrics">
+      <tr><th>Metric</th><th>Value</th><th>What it means</th></tr>
+      <tr><td>Silhouette score</td><td class="hi">[X.XX]</td><td>Cluster separation quality</td></tr>
+      <tr><td>Top segment revenue share</td><td class="hi">[XX%]</td><td>Where to focus retention spend</td></tr>
+      <tr><td>Recommender RMSE</td><td class="hi">[X.XX]</td><td>Prediction accuracy on held-out ratings</td></tr>
+    </table>
+
+    <h2>What I'd do differently</h2>
+    <p>With more time, I'd validate the discovered segments against actual downstream outcomes
+    (repeat purchase rate, churn) rather than proxy clustering metrics alone, and test DBSCAN as a
+    density-based alternative for customer groups that aren't cleanly spherical.</p>
+
+  </article>
+
+  <div class="prev-next">
+    <a href="vehicle-safety.html">← Vehicle Safety Intelligence</a>
+    <a href="transit-accessibility.html">Public Transport Accessibility →</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Transport Accessibility — Maxim Lavelin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<span>.</span></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#about">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">Resume</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">← All projects</a></div>
+
+  <header class="project-hero">
+    <span class="pc-tag mono">GIS & AI · Spatial Data Science</span>
+    <h1>Transit Gap: A Spatial Accessibility Index for Public Transport</h1>
+    <div class="result-line">
+      <b>Result:</b> Built a 400m-buffer accessibility/need index combining CBS Census 2022 and
+      GTFS transit data, using Getis-Ord Gi* to identify statistically significant "transit
+      deserts" — exported as GeoJSON/CSV ready for direct use in ArcGIS.
+    </div>
+    <div class="tags">
+      <span class="tag">Python (Colab)</span><span class="tag">GeoPandas</span>
+      <span class="tag">Spatial joins</span><span class="tag">GTFS</span>
+      <span class="tag">Getis-Ord Gi*</span><span class="tag">ArcGIS-ready output</span>
+    </div>
+    <div class="links-row">
+      <a href="#">📄 Full report (PDF)</a>
+      <a href="#">📓 Notebook</a>
+    </div>
+  </header>
+
+  <article class="body-content">
+
+    <h2>The problem</h2>
+    <p>Transit planning decisions need to identify which neighborhoods are underserved — but
+    "underserved" needs a precise, defensible definition, not a gut feeling. This project builds a
+    quantitative accessibility index combining population data with actual transit stop locations
+    and schedules, to flag areas that are statistically significant gaps rather than just
+    visually sparse on a map.</p>
+
+    <h2>Data</h2>
+    <ul>
+      <li><b>CBS Census 2022</b> — population and demographic data at the statistical area level</li>
+      <li><b>GTFS</b> (General Transit Feed Specification) — real transit stop locations and schedules</li>
+    </ul>
+
+    <h2>Approach</h2>
+    <ul>
+      <li>Built <b>400m walking-distance buffers</b> around every transit stop using GeoPandas
+      spatial operations</li>
+      <li><b>Spatial joins</b> between population data and buffer coverage to compute what share
+      of each area's population has walkable transit access</li>
+      <li>Constructed an <b>accessibility/need index</b> combining population density, transit
+      coverage, and [demographic factors, e.g. age/mobility-relevant population]</li>
+      <li>Applied <b>Getis-Ord Gi*</b> hot-spot analysis — a spatial statistics test that identifies
+      clusters of high or low accessibility that are unlikely to be due to chance, not just areas
+      that happen to look sparse</li>
+      <li>Exported results as <b>GeoJSON/CSV</b>, structured for direct import into ArcGIS —
+      built for planners to use, not just to visualize in a notebook</li>
+    </ul>
+
+    <h2>Results</h2>
+    <p>[Summarize: e.g. "Identified [N] statistically significant transit-desert clusters,
+    concentrated in [region type — e.g. peripheral/low-density areas], covering approximately
+    [X]% of the study area's population."]</p>
+
+    <h2>What I'd do differently</h2>
+    <p>[e.g. "I'd incorporate actual transit frequency/wait time rather than binary stop presence,
+    since a stop served once an hour isn't meaningfully accessible — and validate the index
+    against reported commute times where available."]</p>
+
+  </article>
+
+  <div class="prev-next">
+    <a href="retail-consultant.html">← Retail Consultant</a>
+    <a href="web-tracking.html">Web Tracking & AI Profiling →</a>
+  </div>
+</div>
+
+</body>
+</html>

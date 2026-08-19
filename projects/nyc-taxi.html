@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Taxi Fleet Optimizer — Maxim Lavelin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="../index.html" class="brand">Maxim Lavelin<span>.</span></a>
+    <div class="nav-links">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#about">About</a>
+      <a href="../assets/Maxim_Lavelin_CV.pdf">Resume</a>
+      <a href="mailto:maxim.lavelin@live.biu.ac.il" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">← All projects</a></div>
+
+  <header class="project-hero">
+    <span class="pc-tag mono">Time-Series Forecasting · Independent Project · 2024 data</span>
+    <h1>NYC Taxi Fleet Optimizer: Predicting Hourly Urban Demand with Weather Integration</h1>
+    <div class="result-line">
+      <b>Result:</b> XGBoost reduced Mean Absolute Error by <b>~25%</b> over a linear baseline
+      (728 → 546 rides/hour) on a strict chronological hold-out — with the largest gains during
+      peak-hour demand, exactly when accurate forecasting matters most operationally.
+    </div>
+    <div class="tags">
+      <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">scikit-learn</span>
+      <span class="tag">XGBoost</span><span class="tag">Time-series feature engineering</span>
+      <span class="tag">Chronological validation</span>
+    </div>
+    <div class="links-row">
+      <a href="../assets/NYC_TAXI_Lavelin.pdf">📄 Full report (PDF)</a>
+      <a href="../assets/NYC_CODE_LAVELIN.ipynb">📓 Notebook</a>
+    </div>
+  </header>
+
+  <article class="body-content">
+
+    <h2>The problem</h2>
+    <p>NYC taxi demand swings from near-zero to over 12,000 rides/hour within a single day. Under-forecasting
+    means long passenger wait times and lost revenue; over-forecasting means wasted idle mileage. I framed this
+    as a supervised regression problem — predict total citywide pickups for a given hour — using a year of
+    NYC TLC trip data merged with JFK weather observations.</p>
+
+    <h2>Data</h2>
+    <ul>
+      <li><b>8,616 hourly observations</b> across 2024, aggregated from NYC TLC Yellow Taxi trip records</li>
+      <li>Demand is highly volatile: mean 4,708 rides/hour, std dev 2,712, ranging from 0 to 12,757</li>
+      <li>Weather data from JFK Airport (NOAA/NCEI) — reduced from ~125 raw meteorological fields down to
+      two that actually mattered operationally: continuous temperature and a <b>binary rain indicator</b>
+      (precipitation intensity didn't matter — presence of rain did)</li>
+    </ul>
+
+    <h2>Approach</h2>
+    <p>Two models, evaluated the same way, to make the case for non-linearity honestly rather than assuming it:</p>
+    <ul>
+      <li><b>Linear Regression baseline</b> — interpretable, additive combination of temporal, weather, and
+      lagged demand features. Captures broad seasonality but structurally can't model regime-dependent spikes.</li>
+      <li><b>XGBoost</b> — gradient-boosted trees to capture non-linear interactions (e.g., demand responding
+      differently to weather depending on hour-of-day or recent history)</li>
+    </ul>
+    <p>Feature set: hour-of-day, day-of-week, weekend flag, temperature, rain flag, and <b>lagged demand</b>
+    (24h and 168h/weekly lags, rolling means) — the lagged features turned out to dominate.</p>
+
+    <h2>Evaluation — why the split matters</h2>
+    <p>I used a <b>strict chronological split</b> (train: Jan–Sep 2024, validation: Oct 2024, test: Nov–Dec 2024)
+    instead of random k-fold. This mirrors how the model would actually be deployed — predicting the future from
+    only the past — and avoids the data leakage that a random split would silently introduce.</p>
+
+    <h2>Results</h2>
+    <table class="metrics">
+      <tr><th>Model</th><th>MAE (rides/hr)</th><th>RMSE</th></tr>
+      <tr><td>Linear Regression</td><td>728.43</td><td>993.47</td></tr>
+      <tr><td>XGBoost</td><td class="hi">546.19</td><td class="hi">810.55</td></tr>
+    </table>
+    <p>The linear model systematically <b>underestimates peak demand</b> — its additive structure can't capture
+    the sharp, regime-dependent transitions of rush hour. XGBoost closely tracks both the magnitude and timing
+    of these swings. Feature importance analysis shows the <b>168-hour (weekly) lag</b> dominates predictive
+    power, followed by the 24h lag and hour-of-day — weather contributes only secondary, contextual signal.</p>
+
+    <h2>What I'd do differently</h2>
+    <p>Weather from a single airport station is a coarse proxy for citywide conditions, and city-level
+    aggregation hides neighborhood variation — a zone-level model (Manhattan vs. outer boroughs separately)
+    would likely outperform this citywide one. I'd also incorporate event data (concerts, sports games) to
+    catch non-seasonal demand shocks, currently the hardest cases for the model to predict.</p>
+
+  </article>
+
+  <div class="prev-next">
+    <a href="../index.html">← Back to all projects</a>
+    <a href="vehicle-safety.html">Vehicle Safety Intelligence →</a>
+  </div>
+</div>
+
+</body>
+</html>
