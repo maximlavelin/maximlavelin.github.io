@@ -1,9 +1,9 @@
 # Scarce-data methods for adapting a Modern-Hebrew BERT to Ancient Hebrew (Torah / DSS)
 
 **Goal:** continue pre-training a modern Hebrew BERT (AlephBERT / DictaBERT) on small amounts of ancient Hebrew, then fine-tune a classifier on very little labelled data.
-**Papers (34 PDFs):** `papers/<arXiv-id>_<ShortName>.pdf`. All are arXiv preprints.
+**Papers (25 PDFs):** `papers/<arXiv-id>_<ShortName>.pdf`. All are arXiv preprints.
 
-> **How reliable is this?** I read the abstracts of all 34 papers and the relevant method sections of the key ones (Don't Stop Pretraining, Extending mBERT, BEREL, MiqraBERT, the Ancient-Greek sentence-embedding paper, the Classical-Philology paper). Entries marked ✔ quote hyper-parameters I saw in the PDF. Entries marked ⚠ rely on my recollection of well-known papers, so check the exact numbers in the PDF before you copy them.
+> **How reliable is this?** I read the abstracts of all 25 papers and the relevant method sections of the key ones (Don't Stop Pretraining, Extending mBERT, BEREL, MiqraBERT, the Ancient-Greek sentence-embedding paper, the Classical-Philology paper). Entries marked ✔ quote hyper-parameters I saw in the PDF. Entries marked ⚠ rely on my recollection of well-known papers, so check the exact numbers in the PDF before you copy them.
 > **No paper covers DSS or Biblical Hebrew continued pre-training with a BERT directly.** The closest work is Latin/Greek/Rabbinic-Hebrew models and Biblical-Hebrew embedding studies. The rest is general low-resource technique.
 
 ---
@@ -87,21 +87,6 @@
 - **Results:** new Ancient Greek STS, translation-search and retrieval benchmarks, and large gains over the baselines (see paper).
 - **Recreate for Hebrew:** this needs aligned Torah ↔ English (or modern Hebrew) pairs, which exist (Sefaria). The `sentence-transformers` multilingual distillation training script does this.
 
-### A9. Character-Level Data Augmentation for Style-Based Dating of Historical Manuscripts (includes the Dead Sea Scrolls) — Koopmans et al. 2022 · `2212.07923`
-- **What:** augmentation for dating manuscripts, including Aramaic and DSS images. This is **vision, not text**, so only the idea of augmenting at the grapheme level transfers.
-- **Method:** linear SVMs on textural and grapheme-based features, with k-fold cross-validation, trained on original plus augmented character images.
-- **Results:** +1–3 points in cumulative scores.
-- **Relevance:** low for a text BERT, unless you also work from images or OCR.
-
-### A10. Deep Aramaic: synthetic data for epigraphy — Aioanei et al. 2023 · `2310.07310`
-- **What:** 250k synthetic photo-realistic images of Old Aramaic letters, used to train a ResNet for letter recognition from very few real examples.
-- **Relevance:** low for text, but a good example of the synthetic-data route when a corpus is tiny.
-
-### A11. Smaller related models
-- `2211.05673` **BERT in Plutarch's Shadows** (Ancient Greek BERT used for an authorship question) and `2008.12014` **GREEK-BERT** (Modern Greek only, not ancient). Both are low-priority context.
-
----
-
 ## B. Continued pre-training and adapting to a new language or domain
 
 ### B1. Don't Stop Pretraining (DAPT / TAPT) — Gururangan et al. 2020 · `2004.10964` ⭐
@@ -133,15 +118,7 @@
 - **What:** a dictionary-free alternative to WECHSEL. Each new token is a sparsemax-weighted combination of the *overlapping* tokens (those shared by the old and new vocabularies), chosen by similarity in an auxiliary static embedding space trained on the target corpus.
 - **Use:** since Ancient and Modern Hebrew share much vocabulary, the overlap is large, which is exactly where FOCUS works well. It also needs only a small target corpus to train the auxiliary fastText-style embeddings.
 
-### B5. UNKs Everywhere — Pfeiffer et al. 2021 · `2012.15562`
-- **What:** adapt a multilingual model to unseen scripts using matrix factorisation of the existing embedding matrix, and lexical initialisation of new tokens from related ones.
-- **Relevance:** medium. Hebrew script is already in the vocabulary, but the idea of initialising new tokens from related ones carries over.
-
-### B6. Multilingual Adaptive Fine-Tuning (MAFT) — Alabi et al. 2022 · `2204.06487`
-- **What:** continue MLM on monolingual text of many related low-resource languages at once, instead of one adapter per language. Vocabulary can be pruned to the languages used.
-- **Use:** supports mixing several related text varieties (Biblical, DSS, Rabbinic, modern) in one continued pre-training run instead of training a separate model for each.
-
-### B7. ULMFiT — Howard & Ruder 2018 · `1801.06146`
+### B5. ULMFiT — Howard & Ruder 2018 · `1801.06146`
 - **What:** the original recipe for fine-tuning a language model with little labelled data.
 - **Method (from the paper ⚠ check values):**
   - Discriminative fine-tuning: a different LR for each layer, dropping by about 2.6× per layer going down.
@@ -151,7 +128,7 @@
 - **Results:** error cut by 18–24% on most datasets, and with 100 labelled examples it matches training from scratch on 100× more data.
 - **Use:** the three-stage logic (general → ancient-domain LM → classifier) is exactly your plan. The discriminative LR and gradual unfreezing tricks work with BERT.
 
-### B8. When Do You Need Billions of Words of Pretraining Data? — Zhang et al. 2021 · `2011.04946`
+### B6. When Do You Need Billions of Words of Pretraining Data? — Zhang et al. 2021 · `2011.04946`
 - **What:** learning curves for MiniBERTas pre-trained on 1M, 10M, 100M and 1B words.
 - **Results:** models need only ~10M–100M words to learn most syntactic and semantic features that probes can detect. Commonsense and many NLU tasks need much more.
 - **Use:** an expectation-setter. A few million words of ancient Hebrew teach a lot of surface and syntactic structure but cannot teach world knowledge, so lean on the modern Hebrew base for the rest.
@@ -168,11 +145,7 @@
 - **Method:** (1) train a **language adapter** with MLM on target-language text (adding an invertible adapter at the embedding layer); (2) train a **task adapter** on source-language labelled data; (3) at test time, swap in the target language adapter.
 - **Use:** the language-adapter-plus-task-adapter split fits "ancient Hebrew MLM, then classifier" exactly. It also lets you train the classifier on modern Hebrew labelled data and swap in the ancient-language adapter, if such data exists.
 
-### C3. AdapterFusion — Pfeiffer et al. 2021 · `2005.00247`
-- **Method:** train separate adapters on several tasks, then learn an attention-style fusion layer that mixes them for the target task.
-- **Use:** if you have several small related classification tasks, combine their adapters instead of pooling the data.
-
-### C4. LoRA — Hu et al. 2022 · `2106.09685`
+### C3. LoRA — Hu et al. 2022 · `2106.09685`
 - **Method:** freeze the weights and add trainable low-rank updates ΔW = BA (rank r, typically 4–16) to the attention projections (Q and V). Scale by α/r. The updates can be merged into the weights after training.
 - **Use:** simple, works for both the MLM stage and the classifier. Use the `peft` library.
 
@@ -204,12 +177,6 @@
 - **Method:** during fine-tuning, with probability p replace each parameter by its pre-trained value, as in dropout but toward the original weights. A typical p is ~0.9 ⚠.
 - **Use:** keeps the fine-tuned model close to the pre-trained one. Zhang et al. found it adds little once the optimiser issues are fixed, so try it last.
 
-### E4. Intermediate-Task Transfer — Pruksachatkun et al. 2020 · `2005.00628`
-- **Findings:** training first on a data-rich task (high-level inference or reasoning tasks work best) can help a small target task, but it often hurts, and is hard to predict.
-- **Use:** you could try a related Hebrew task (for example morphology or NER on modern Hebrew) first. Treat it as an experiment, not a sure win.
-
----
-
 ## F. Data augmentation
 
 ### F1. EDA — Wei & Zou 2019 · `1901.11196`
@@ -222,16 +189,11 @@
 - **Results:** with 20 labelled IMDb examples it reached an error rate of about 4% (the paper's headline; see the PDF).
 - **Use:** your unlabelled ancient text becomes useful in the classifier stage. Back-translation needs a Hebrew↔English MT model and will be noisy on Biblical Hebrew.
 
-### F3. A Survey of Data Augmentation Approaches for NLP — Feng et al. 2021 · `2105.03075`
-- **Use:** a catalogue (rule-based, interpolation such as MixUp, model-based such as back-translation and generation). Read it when choosing augmentations.
-
----
-
 ## G. Open gaps (my honest assessment)
 
 1. I found **no paper that continues pre-training a Modern-Hebrew BERT on Biblical or DSS text**. Doing so (with proper ablations) would itself be a contribution.
 2. Search coverage was limited to arXiv (it works from this environment). ACL Anthology papers on Hebrew NLP (for example work on Biblical Hebrew morphology or Dicta's other tools) may exist and are not covered here.
-3. For the DSS in particular, much computational work is on images, so only A9/A10 appeared.
+3. For the DSS in particular, the computational work I found is on images (manuscript dating, writer identification), so I dropped it as irrelevant to a text BERT.
 4. Numbers marked ⚠ should be checked in the PDFs before you cite them.
 
 ## Index of files
@@ -246,18 +208,13 @@
 | 2009.10053_Latin_BERT | A6 |
 | 2305.13698_Classical_Philology_LMs | A7 |
 | 2308.13116_Ancient_Greek_Sentence_Embeddings | A8 |
-| 2212.07923_Char_Augmentation_DSS_Dating | A9 |
-| 2310.07310_Deep_Aramaic_Synthetic_Data | A10 |
-| 2211.05673_BERT_Plutarch_Ancient_Greek, 2008.12014_Greek_BERT_modern | A11 |
 | 2004.10964_Dont_Stop_Pretraining | B1 |
 | 2004.13640_Extending_mBERT_Low_Resource | B2 |
 | 2112.06598_WECHSEL | B3 |
 | 2305.14481_FOCUS | B4 |
-| 2012.15562_UNKs_Everywhere | B5 |
-| 2204.06487_Multilingual_Adaptive_FT_African | B6 |
-| 1801.06146_ULMFiT | B7 |
-| 2011.04946_Billions_of_Words_Pretraining | B8 |
-| 1902.00751_Adapters_Houlsby, 2005.00052_MAD-X, 2005.00247_AdapterFusion, 2106.09685_LoRA | C1–C4 |
+| 1801.06146_ULMFiT | B5 |
+| 2011.04946_Billions_of_Words_Pretraining | B6 |
+| 1902.00751_Adapters_Houlsby, 2005.00052_MAD-X, 2106.09685_LoRA | C1–C3 |
 | 2001.07676_PET, 2009.07118_Small_LMs_Few_Shot, 2209.11055_SetFit | D |
-| 2006.05987_Revisiting_Few_Sample_BERT_FT, 2006.04884_Stability_of_FT_BERT, 1909.11299_Mixout, 2005.00628_Intermediate_Task_Transfer | E |
-| 1901.11196_EDA, 1904.12848_UDA, 2105.03075_DA_Survey | F |
+| 2006.05987_Revisiting_Few_Sample_BERT_FT, 2006.04884_Stability_of_FT_BERT, 1909.11299_Mixout | E |
+| 1901.11196_EDA, 1904.12848_UDA | F |
