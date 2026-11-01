@@ -1,0 +1,3 @@
+paper	url	file	result
+ALUM (Liu et al. 2020)	https://arxiv.org/pdf/2004.08994	-	FAILURE: proxy 403 on CONNECT to arxiv.org (host not in allowed domains)
+ACL Anthology (any paper)	https://aclanthology.org/	-	FAILURE: proxy 403 on CONNECT to aclanthology.org (host not in allowed domains)
