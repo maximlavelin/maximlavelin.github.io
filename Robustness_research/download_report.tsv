@@ -1,3 +1,37 @@
 paper	url	file	result
-ALUM (Liu et al. 2020)	https://arxiv.org/pdf/2004.08994	-	FAILURE: proxy 403 on CONNECT to arxiv.org (host not in allowed domains)
-ACL Anthology (any paper)	https://aclanthology.org/	-	FAILURE: proxy 403 on CONNECT to aclanthology.org (host not in allowed domains)
+Wei2019_EDA.pdf	https://arxiv.org/pdf/1901.11196	Wei2019_EDA.pdf	SUCCESS
+Goodfellow2015_FGSM.pdf	https://arxiv.org/pdf/1412.6572	Goodfellow2015_FGSM.pdf	SUCCESS
+Madry2018_PGD.pdf	https://arxiv.org/pdf/1706.06083	Madry2018_PGD.pdf	SUCCESS
+Jin2020_TextFooler.pdf	https://arxiv.org/pdf/1907.11932	Jin2020_TextFooler.pdf	SUCCESS
+Li2020_BERTAttack.pdf	https://arxiv.org/pdf/2004.09984	Li2020_BERTAttack.pdf	SUCCESS
+Zhao2024_NoiseBERT.pdf	https://arxiv.org/pdf/2402.14494	Zhao2024_NoiseBERT.pdf	SUCCESS
+Heydari2026_CDAE.pdf	https://arxiv.org/pdf/2607.28236	Heydari2026_CDAE.pdf	SUCCESS
+Zhu2020_FreeLB.pdf	https://arxiv.org/pdf/1909.11764	Zhu2020_FreeLB.pdf	SUCCESS
+Jiang2020_SMART.pdf	https://arxiv.org/pdf/1911.03437	Jiang2020_SMART.pdf	SUCCESS
+Kim2023_RoAST.pdf	https://arxiv.org/pdf/2312.04032	Kim2023_RoAST.pdf	SUCCESS
+Moradi2021_InputPerturbations.pdf	https://arxiv.org/pdf/2108.12237	Moradi2021_InputPerturbations.pdf	SUCCESS
+Pruthi2019_Misspellings.pdf	https://arxiv.org/pdf/1905.11268	Pruthi2019_Misspellings.pdf	SUCCESS
+Cohen2026_SDBN.pdf	https://arxiv.org/pdf/2606.10610	Cohen2026_SDBN.pdf	SUCCESS
+Provilkov2020_BPEDropout.pdf	https://arxiv.org/pdf/1910.13267	Provilkov2020_BPEDropout.pdf	SUCCESS
+Morris2020_TextAttack.pdf	https://arxiv.org/pdf/2005.05909	Morris2020_TextAttack.pdf	SUCCESS
+Qiang2024_PPCL.pdf	https://aclanthology.org/2024.findings-eacl.91.pdf	Qiang2024_PPCL.pdf	SUCCESS
+Wang2021_AdvGLUE.pdf	https://arxiv.org/pdf/2111.02840	Wang2021_AdvGLUE.pdf	SUCCESS
+Wang2022_RobustnessSurvey.pdf	https://arxiv.org/pdf/2112.08313	Wang2022_RobustnessSurvey.pdf	SUCCESS
+Ribeiro2020_CheckList.pdf	https://arxiv.org/pdf/2005.04118	Ribeiro2020_CheckList.pdf	SUCCESS
+Li2023_PerturbScore.pdf	https://arxiv.org/pdf/2310.08889	Li2023_PerturbScore.pdf	SUCCESS
+Agrawal2025_PerturbedInstructions.pdf	https://arxiv.org/pdf/2504.02733	Agrawal2025_PerturbedInstructions.pdf	SUCCESS
+Liu2020_ALUM.pdf (NEW entry)	https://arxiv.org/pdf/2004.08994	Liu2020_ALUM.pdf	SUCCESS
+Ma2020_CharBERT.pdf (NEW entry)	https://arxiv.org/pdf/2011.01513	Ma2020_CharBERT.pdf	SUCCESS
+Wu2020_CLEAR.pdf (NEW entry)	https://arxiv.org/pdf/2012.15466	Wu2020_CLEAR.pdf	SUCCESS
+Hiraoka2022_MaxMatchDropout.pdf (NEW entry)	https://arxiv.org/pdf/2209.04126	Hiraoka2022_MaxMatchDropout.pdf	SUCCESS
+Xue2022_ByT5.pdf (NEW entry)	https://arxiv.org/pdf/2105.13626	Xue2022_ByT5.pdf	SUCCESS
+Shmidman2025_NeoDictaBERT.pdf (NEW entry)	https://arxiv.org/pdf/2510.20386	Shmidman2025_NeoDictaBERT.pdf	SUCCESS
+Gueta2022_HebrewBERTs.pdf (NEW entry)	https://arxiv.org/pdf/2211.15199	Gueta2022_HebrewBERTs.pdf	SUCCESS
+Lustig2022_BEREL.pdf (NEW entry)	https://arxiv.org/pdf/2208.01875	Lustig2022_BEREL.pdf	SUCCESS
+Bollmann2019_Normalization.pdf (NEW entry)	https://arxiv.org/pdf/1904.02036	Bollmann2019_Normalization.pdf	SUCCESS
+Riemenschneider2023_ClassicalPhilology.pdf (NEW entry)	https://arxiv.org/pdf/2305.13698	Riemenschneider2023_ClassicalPhilology.pdf	SUCCESS
+Elazar2021_Consistency.pdf (NEW entry)	https://arxiv.org/pdf/2102.01017	Elazar2021_Consistency.pdf	SUCCESS
+Wegmann2022_StyleContent.pdf (NEW entry)	https://arxiv.org/pdf/2204.04907	Wegmann2022_StyleContent.pdf	SUCCESS
+Lourie2025_QumranClustering.pdf (NEW entry)	https://aclanthology.org/2025.alp-1.2.pdf	Lourie2025_QumranClustering.pdf	SUCCESS
+Sun2020_AdvBERT.pdf (downloaded, NOT used)	https://arxiv.org/pdf/2003.04985	Sun2020_AdvBERT.pdf	SUCCESS (dropped: 13-paper cap, closest to generic adversarial NLP)
+ALL (first attempt)	-	-	FAILURE before network was opened (proxy 403 on arxiv.org / aclanthology.org); resolved after the user allowed both hosts; all rows above are from the second attempt
