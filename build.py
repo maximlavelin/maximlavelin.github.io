@@ -342,18 +342,22 @@ def build_home():
       <span>Mechanical engineering background</span>
     </div>
 
-    <div class="abstract">
-      <div class="label">Abstract</div>
+    <div class="abstract" id="about">
+      <div class="label">About Me</div>
       <div>
-        <p>I&rsquo;m a Data Science and Machine Learning student with a background in Mechanical
-        Engineering, focused on applying statistical and machine learning methods to real-world
-        problems.</p>
-        <p>This portfolio presents projects across forecasting, NLP and deep learning, customer
-        analytics, geospatial analysis, and responsible AI. Each project includes the problem,
-        methodology, key results, and limitations, with links to the full code and report.</p>
-        <p>My focus is not only on building models, but on understanding the data, selecting
-        appropriate methods, evaluating them rigorously, and translating the results into useful
-        conclusions.</p>
+        <p>I hold a <strong>B.Sc. in Mechanical Engineering</strong> and am currently pursuing an
+        <strong>M.A. in Information Science, specializing in Information Technologies, at Bar-Ilan
+        University</strong> (thesis track). My research applies artificial intelligence and natural
+        language processing to Ancient Hebrew texts, with a focus on computational analysis of
+        linguistic variation and authorship.</p>
+        <p>My experience covers supervised and unsupervised learning, deep learning, NLP, statistical
+        analysis and geospatial data. I like to work end to end: understanding the problem and the
+        data, choosing the right methods, evaluating them rigorously and turning the results into
+        clear, useful conclusions.</p>
+        <p>This portfolio covers projects in forecasting, NLP and deep learning, customer analytics,
+        geospatial analysis and responsible AI. Each one sets out the problem, method, key results and
+        limitations. I&rsquo;m looking for a Data Science, Machine Learning or Analytics role where I
+        can combine engineering problem-solving with modern ML methods.</p>
       </div>
     </div>
 
@@ -403,21 +407,6 @@ def build_home():
     </div>
   </section>
 
-  <section class="section" id="about">
-    <div class="section-head"><h2>About</h2></div>
-    <div class="about">
-      <div class="label">Author note</div>
-      <div>
-        <p>I am a <strong>Mechanical Engineer</strong> building my career in Data Science and
-        Machine Learning, with experience across supervised and unsupervised learning, deep learning,
-        statistical analysis, and geospatial data.</p>
-        <p>I enjoy working end to end: understanding the problem, preparing and exploring the data,
-        selecting and comparing models, validating results, and communicating the findings clearly.</p>
-        <p>I am looking for a Data Science, Machine Learning, or Analytics role where I can combine
-        analytical thinking, engineering problem-solving, and modern ML methods.</p>
-      </div>
-    </div>
-  </section>
 """
     html += FOOT.format(gh=GH, email=EMAIL)
     open(os.path.join(OUT, "index.html"), "w").write(html)
